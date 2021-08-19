@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TextInput,
   TextPropTypes,
+  Text,
 } from 'react-native';
 
 const Login = ({navigation}) => {
@@ -14,16 +15,17 @@ const Login = ({navigation}) => {
   const checkCredentials = () => {
     let apiCall = true;
     if (apiCall) {
-      navigation.navigate('Home');
+      navigation.navigate('HomeScreen');
     }
   };
 
   const signUp = () => {
-    navigation.navigate('SignUp');
+    navigation.navigate('SignUpScreen');
   };
 
   return (
     <SafeAreaView>
+      <Text>Login</Text>
       <TextInput
         style={styles.input}
         onChangeText={onChangeUserName}
