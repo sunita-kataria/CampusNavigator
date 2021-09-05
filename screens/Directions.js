@@ -1,33 +1,33 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, FlatList, Button, StyleSheet} from 'react-native';
 import {Direction} from '../components';
 
-const DATA = [
-  {
-    id: 1,
-    pictureUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-JC4Tc15mhraeLJij-Jq6lzrZqKkkrOUcljo4hRrK9JQTlycw2HaxbyUgOxvS_3N8VjM&usqp=CAU',
-    destination: 'Tower Gate',
-    summary:
-      'main gate -> left turn -> canteen -> mechanical lab -> Tower->main gate -> left turn -> canteen -> mechanical lab -> Tower->main gate -> left turn -> canteen -> mechanical lab -> Tower->main gate -> left turn -> canteen -> mechanical lab -> Tower',
-  },
-  {
-    id: 2,
-    pictureUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-JC4Tc15mhraeLJij-Jq6lzrZqKkkrOUcljo4hRrK9JQTlycw2HaxbyUgOxvS_3N8VjM&usqp=CAU',
-    destination: 'Tower ',
-    summary: 'main gate -> left turn -> canteen -> mechanical lab -> Tower',
-  },
-];
-
 export default function Directions({navigation}) {
-  const renderItem = ({item}) => (
-    <Direction
-      pictureUrl={item.pictureUrl}
-      destination={item.destination}
-      summary={item.summary}
-    />
-  );
+  const [DATA, setDATA] = useState([]);
+  const apicall = async () => {
+    try {
+      const data = [];
+      const res = await fetch('http://192.168.1.7:8080/classroom/getAll');
+      var json = await res.json();
+      for (var i = 0; i < json.length; i++) {
+        const res2 = await fetch(
+          'http://192.168.1.7:8080/direction/getByClassId/' + json[i]['id'],
+        );
+        if (res2['status'] == 200) {
+          var json2 = await res2.json();
+          data.push(json2);
+        }
+      }
+      setDATA(data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  useEffect(() => {
+    apicall();
+  }, []);
+
+  const renderItem = ({item}) => <Direction data={item} key={item.id} />;
 
   return (
     <View>

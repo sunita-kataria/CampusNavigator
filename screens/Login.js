@@ -14,14 +14,34 @@ const Login = ({navigation}) => {
   const [userName, onChangeUserName] = React.useState('');
   const [password, onChangePassword] = React.useState('');
 
-  const checkCredentials = () => {
-    let apiCall = true;
-    if (apiCall) {
-      navigation.navigate('HomeScreen');
+  const checkCredentials = async () => {
+    try {
+      const res = await fetch('http://192.168.1.7:8080/auth/login', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          emailId: 'abc@gmail.com',
+          pwd: '123456',
+        }),
+      });
+      var json = await res.json();
+      if (json['loggedIn']) {
+        navigation.navigate('HomeScreen');
+      } else {
+        alert(json['message']);
+      }
+    } catch (err) {
+      console.error(err);
     }
+    // let apiCall = true;
+    // if (apiCall) {
+    // }
   };
 
-  const signUp = () => {
+  const signUp = async () => {
     navigation.navigate('SignUpScreen');
   };
 

@@ -17,10 +17,28 @@ const SignUp = ({navigation}) => {
   const [password, onChangePassword] = React.useState('');
   const [confirmPassword, onChangeConfirmPassword] = React.useState('');
 
-  const checkCredentials = () => {
-    let apiCall = true;
-    if (apiCall) {
-      navigation.navigate('HomeScreen');
+  const checkCredentials = async () => {
+    try {
+      const res = await fetch('http://192.168.1.7:8080/auth/register', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: Name,
+          emailId: userName,
+          pwd: password,
+        }),
+      });
+      var json = await res.json();
+      if (json['loggedIn']) {
+        navigation.navigate('HomeScreen');
+      } else {
+        alert(json['message']);
+      }
+    } catch (err) {
+      console.error(err);
     }
   };
 

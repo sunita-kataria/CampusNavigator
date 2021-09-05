@@ -5,5 +5,15 @@ import Routine from './Routine';
 import LandMarks from './LandMarks';
 import Directions from './Directions';
 import AddDirection from './AddDirection';
+import AddLandMark from './AddLandMark';
 
-export {Home, Login, SignUp, Routine, LandMarks, Directions, AddDirection};
+export {
+  Home,
+  Login,
+  SignUp,
+  Routine,
+  LandMarks,
+  Directions,
+  AddDirection,
+  AddLandMark,
+};

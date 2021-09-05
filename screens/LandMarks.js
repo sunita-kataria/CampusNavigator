@@ -26,7 +26,7 @@ const DATA = [
   },
 ];
 
-export default function LandMarks() {
+export default function LandMarks({navigation}) {
   const renderItem = ({item}) => (
     <LandMark
       pictureUrl={item.pictureUrl}
@@ -37,7 +37,11 @@ export default function LandMarks() {
 
   return (
     <View>
-      <Button title="Add More" color="#101EF3" />
+      <Button
+        title="Add More"
+        color="#101EF3"
+        onPress={() => navigation.navigate('AddLandMark')}
+      />
       <FlatList
         data={DATA}
         renderItem={renderItem}
