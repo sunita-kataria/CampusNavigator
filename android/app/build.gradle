@@ -132,6 +132,9 @@ android {
 
     defaultConfig {
         applicationId "com.navigateyourcampus"
+        vectorDrawables.useSupportLibrary = true
+        targetSdkVersion 27
+
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
