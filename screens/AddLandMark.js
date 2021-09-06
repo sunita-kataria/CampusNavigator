@@ -1,8 +1,14 @@
-import React from 'react';
-import {View, Text, Button} from 'react-native';
+import React, {useState} from 'react';
+import {View, Text, Button, Image, TextInput, StyleSheet} from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
+import ImgToBase64 from 'react-native-image-base64';
 
 export default function AddLandMark() {
+  const [location, setlocation] = useState('');
+  const [name, setname] = useState('');
+  const [step, setStep] = useState('');
+  const submit = () => {};
+
   const selectfromgallery = () => {
     ImagePicker.openPicker({
       width: 300,
@@ -10,6 +16,10 @@ export default function AddLandMark() {
       cropping: true,
     }).then(image => {
       console.log(image);
+      setlocation(image['path']);
+      // ImgToBase64.getBase64String(image['path'])
+      //   .then(base64String => doSomethingWith(base64String))
+      //   .catch(err => doSomethingWith(err));
     });
   };
   const takepic = () => {
@@ -25,6 +35,22 @@ export default function AddLandMark() {
     <View>
       <Button onPress={selectfromgallery} title="select from gallery" />
       <Button onPress={takepic} title="take from camera" />
+      {/* <Image
+        source={require('file:///storage/emulated/0/Android/data/com.navigateyourcampus/files/Pictures/19da8c6b-d071-4a03-a0b3-8c9edb706882.jpg')}
+      /> */}
+      <Image
+        source={{
+          uri: location,
+        }}
+        style={{
+          width: '100%',
+          height: '60%',
+          // resizeMode: Image.resizeMode.contain,
+        }}
+      />
+      <TextInput onChangeText={setStep} value={step} style={styles.input} />
+
+      <Button onPress={submit} title="submit" />
     </View>
   );
 }
@@ -109,26 +135,33 @@ export default function AddLandMark() {
 //   }
 // }
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     padding: 30,
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//     backgroundColor: '#fff',
-//   },
-//   button: {
-//     width: 250,
-//     height: 60,
-//     backgroundColor: '#3740ff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//     borderRadius: 4,
-//     marginBottom: 12,
-//   },
-//   buttonText: {
-//     textAlign: 'center',
-//     fontSize: 15,
-//     color: '#fff',
-//   },
-// });
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 30,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#fff',
+  },
+  input: {
+    // height: 40,
+    // margin: 12,
+    borderWidth: 1,
+    borderRadius: 15,
+    // padding: 10,
+  },
+  button: {
+    width: 250,
+    height: 60,
+    backgroundColor: '#3740ff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 4,
+    marginBottom: 12,
+  },
+  buttonText: {
+    textAlign: 'center',
+    fontSize: 15,
+    color: '#fff',
+  },
+});

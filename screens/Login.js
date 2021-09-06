@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {Button} from '../components';
+import localhost from '../ip';
 
 const Login = ({navigation}) => {
   const [userName, onChangeUserName] = React.useState('');
@@ -16,7 +17,7 @@ const Login = ({navigation}) => {
 
   const checkCredentials = async () => {
     try {
-      const res = await fetch('http://192.168.1.7:8080/auth/login', {
+      const res = await fetch('http://' + localhost + ':8080/auth/login', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
