@@ -10,10 +10,11 @@ import {
 } from 'react-native';
 import {Button} from '../components';
 import localhost from '../ip';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = ({navigation}) => {
-  const [userName, onChangeUserName] = React.useState('');
-  const [password, onChangePassword] = React.useState('');
+  const [userName, onChangeUserName] = React.useState('abc@gmail.com');
+  const [password, onChangePassword] = React.useState('123456');
 
   const checkCredentials = async () => {
     try {
@@ -24,12 +25,14 @@ const Login = ({navigation}) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          emailId: 'abc@gmail.com',
-          pwd: '123456',
+          emailId: userName,
+          pwd: password,
         }),
       });
       var json = await res.json();
       if (json['loggedIn']) {
+        AsyncStorage.setItem('email', userName);
+
         navigation.navigate('HomeScreen');
       } else {
         alert(json['message']);

@@ -10,6 +10,9 @@ import {
 } from 'react-native';
 import {Button} from '../components';
 import localhost from '../ip';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+// 25737008@students.lincoln.ac.uk
 
 const SignUp = ({navigation}) => {
   const [userName, onChangeUserName] = React.useState('');

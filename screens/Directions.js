@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {useFocusEffect} from '@react-navigation/native';
 import {View, Text, FlatList, Button, StyleSheet} from 'react-native';
 import {Direction} from '../components';
 import localhost from '../ip';

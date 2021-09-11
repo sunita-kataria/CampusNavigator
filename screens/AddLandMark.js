@@ -2,14 +2,35 @@ import React, {useState} from 'react';
 import {View, Text, Button, Image, TextInput, StyleSheet} from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import ImgToBase64 from 'react-native-image-base64';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import localhost from '../ip';
 
-export default function AddLandMark() {
+export default function AddLandMark({navigation}) {
   const [location, setlocation] = useState('');
-  const [name, setname] = useState('');
   const [step, setStep] = useState('');
-  const submit = () => {};
+  const submit = async () => {
+    const e = await AsyncStorage.getItem('email');
+    const res = await fetch('http://' + localhost + ':8080/landmark/create', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: step,
+        image: location,
+        student: {
+          emailId: e,
+        },
+      }),
+    });
+    var json = await res.json();
+    if (res.status) {
+      navigation.goBack();
+    }
+  };
 
-  const selectfromgallery = () => {
+  const selectfromgallery = async () => {
     ImagePicker.openPicker({
       width: 300,
       height: 400,
@@ -17,6 +38,7 @@ export default function AddLandMark() {
     }).then(image => {
       console.log(image);
       setlocation(image['path']);
+
       // ImgToBase64.getBase64String(image['path'])
       //   .then(base64String => doSomethingWith(base64String))
       //   .catch(err => doSomethingWith(err));
@@ -48,7 +70,12 @@ export default function AddLandMark() {
           // resizeMode: Image.resizeMode.contain,
         }}
       />
-      <TextInput onChangeText={setStep} value={step} style={styles.input} />
+      <TextInput
+        onChangeText={setStep}
+        value={step}
+        style={styles.input}
+        placeholder="name"
+      />
 
       <Button onPress={submit} title="submit" />
     </View>
