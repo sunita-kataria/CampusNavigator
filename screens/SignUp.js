@@ -37,6 +37,8 @@ const SignUp = ({navigation}) => {
       });
       var json = await res.json();
       if (json['loggedIn']) {
+        AsyncStorage.setItem('email', userName);
+
         navigation.navigate('HomeScreen');
       } else {
         alert(json['message']);
