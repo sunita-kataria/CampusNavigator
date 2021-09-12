@@ -45,18 +45,17 @@ export default function LandMarks({navigation}) {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
-        <Text></Text>
+        <Button
+          title="Add More"
+          color="#101EF3"
+          onPress={() => navigation.navigate('AddLandMark')}
+        />
+        <FlatList
+          data={DATA}
+          renderItem={renderItem}
+          keyExtractor={item => item.id}
+        />
       </ScrollView>
-      <Button
-        title="Add More"
-        color="#101EF3"
-        onPress={() => navigation.navigate('AddLandMark')}
-      />
-      <FlatList
-        data={DATA}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-      />
     </SafeAreaView>
   );
 }

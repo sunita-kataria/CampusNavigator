@@ -1,11 +1,20 @@
 import React, {useEffect, useState} from 'react';
 import {useFocusEffect} from '@react-navigation/native';
-import {View, Text, FlatList, Button, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  Button,
+  StyleSheet,
+  ScrollView,
+  RefreshControl,
+} from 'react-native';
 import {Direction} from '../components';
 import localhost from '../ip';
 
 export default function Directions({navigation}) {
   const [DATA, setDATA] = useState([]);
+  const [refreshing, setrefreshing] = useState(false);
   const apicall = async () => {
     try {
       const data = [];
@@ -34,18 +43,28 @@ export default function Directions({navigation}) {
 
   const renderItem = ({item}) => <Direction data={item} key={item.id} />;
 
+  const onRefresh = () => {
+    apicall();
+  };
   return (
     <View>
-      <Button
-        title="Add More"
-        color="#101EF3"
-        onPress={() => navigation.navigate('AddDirection')}
-      />
-      <FlatList
-        data={DATA}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-      />
+      <ScrollView
+        contentContainerStyle={styles.scrollView}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
+        <Button
+          title="Add More"
+          color="#101EF3"
+          onPress={() => navigation.navigate('AddDirection')}
+        />
+        <FlatList
+          data={DATA}
+          renderItem={renderItem}
+          keyExtractor={item => item.id}
+        />
+      </ScrollView>
     </View>
   );
 }
+const styles = StyleSheet.create({});

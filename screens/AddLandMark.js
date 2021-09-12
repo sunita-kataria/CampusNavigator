@@ -4,6 +4,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import ImgToBase64 from 'react-native-image-base64';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import localhost from '../ip';
+import RNFetchBlob from 'rn-fetch-blob';
 
 export default function AddLandMark({navigation}) {
   const [location, setlocation] = useState('');
@@ -29,7 +30,35 @@ export default function AddLandMark({navigation}) {
       navigation.goBack();
     }
   };
-
+  let xyz = path => {
+    let data = '';
+    RNFetchBlob.fs
+      .readStream(
+        // file path
+        path,
+        // encoding, should be one of `base64`, `utf8`, `ascii`
+        'base64',
+        // (optional) buffer size, default to 4096 (4095 for BASE64 encoded data)
+        // when reading file in BASE64 encoding, buffer size must be multiples of 3.
+        4095,
+      )
+      .then(ifstream => {
+        ifstream.open();
+        ifstream.onData(chunk => {
+          // when encoding is `ascii`, chunk will be an array contains numbers
+          // otherwise it will be a string
+          data += chunk;
+        });
+        ifstream.onError(err => {
+          console.log('oops', err);
+        });
+        ifstream.onEnd(() => {
+          var uri = 'data:image/png,base64' + data;
+          console.log(uri + 'base');
+          setlocation(uri);
+        });
+      });
+  };
   const selectfromgallery = async () => {
     ImagePicker.openPicker({
       width: 300,
@@ -38,10 +67,7 @@ export default function AddLandMark({navigation}) {
     }).then(image => {
       console.log(image);
       setlocation(image['path']);
-
-      // ImgToBase64.getBase64String(image['path'])
-      //   .then(base64String => doSomethingWith(base64String))
-      //   .catch(err => doSomethingWith(err));
+      // xyz(image['path']);
     });
   };
   const takepic = () => {
@@ -57,9 +83,7 @@ export default function AddLandMark({navigation}) {
     <View>
       <Button onPress={selectfromgallery} title="select from gallery" />
       <Button onPress={takepic} title="take from camera" />
-      {/* <Image
-        source={require('file:///storage/emulated/0/Android/data/com.navigateyourcampus/files/Pictures/19da8c6b-d071-4a03-a0b3-8c9edb706882.jpg')}
-      /> */}
+
       <Image
         source={{
           uri: location,

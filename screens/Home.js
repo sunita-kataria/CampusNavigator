@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, Component} from 'react';
 import {
   View,
   Text,
@@ -8,6 +8,16 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import localhost from '../ip';
+
+import {
+  Table,
+  Row,
+  Rows,
+  Col,
+  TableWrapper,
+  Cell,
+} from 'react-native-table-component';
+
 export default function Home({navigation}) {
   const [DATA, setDATA] = useState([]);
   const apicall = async () => {
@@ -34,12 +44,14 @@ export default function Home({navigation}) {
     'Wednesday',
     'Thursday',
     'Friday',
-    'Saturday',
-    'Sunday',
+    // 'Saturday',
+    // 'Sunday',
   ];
   useEffect(() => {
     apicall();
   }, []);
+  const something = () => {};
+
   if (DATA.length > 0) {
     var obj = {};
     obj[ind('Monday')] = new Array();
@@ -52,29 +64,42 @@ export default function Home({navigation}) {
     for (var i = 0; i < DATA.length; i++) {
       obj[ind(DATA[i]['weekDay'])].push(DATA[i]);
     }
-    console.log(obj[1].length);
     for (var i = 1; i <= 7; i++) {
       obj[i].sort((a, b) => {
         return a.startTime - b.startTime;
       });
     }
+    const box = [];
+    for (var i = 1; i <= 7; i++) {
+      const smallbox = [];
+      for (var j = 0; j < obj[i].length; j++) {
+        smallbox.push(obj[i][j]['courseName'] + '   ');
+      }
+      box.push(smallbox);
+    }
+    // console.log(box);
 
     return (
       <View>
-        {days.map(item => (
-          <>
-            <Text>{item}</Text>
-            <Text>
-              {obj[ind(item)].map(e => (
-                <TouchableOpacity style={styles.button} onPress={onPress}>
-                  <Text>
-                    {e['courseName']} [{e.startTime} to {e.endTime}]
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </Text>
-          </>
-        ))}
+        <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
+          {/* <TableWrapper> */}
+          <TableWrapper style={{flexDirection: 'row'}}>
+            <Col
+              data={days}
+              style={styles.head}
+              borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}
+              // heightArr={[60, 60]}
+              textStyle={styles.text}
+            />
+            <Col
+              data={box}
+              borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}
+              style={styles.title}
+              heightArr={[30, 30, 30, 30, 30]}
+              textStyle={styles.titleText}></Col>
+          </TableWrapper>
+          {/* </TableWrapper> */}
+        </Table>
       </View>
     );
   }
@@ -95,4 +120,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 10,
   },
+  singleHead: {backgroundColor: '#c8e1ff'},
+  head: {flex: 1, backgroundColor: '#c8e1ff', borderRadius: 2},
+  title: {
+    flex: 4,
+    backgroundColor: '#f6f8fa',
+    borderRadius: 2,
+    borderWidth: 2,
+    borderColor: '#c8e1ff',
+  },
+  titleText: {
+    borderRadius: 2,
+    borderColor: '#c8e1ff',
+    fontWeight: 'bold',
+  },
+  btn: {
+    width: 58,
+    height: 18,
+    marginLeft: 15,
+    backgroundColor: '#c8e1ff',
+    borderRadius: 2,
+  },
+  btnText: {textAlign: 'center'},
+  text: {textAlign: 'center', fontWeight: '100'},
 });
