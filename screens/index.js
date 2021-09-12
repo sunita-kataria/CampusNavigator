@@ -6,6 +6,7 @@ import LandMarks from './LandMarks';
 import Directions from './Directions';
 import AddDirection from './AddDirection';
 import AddLandMark from './AddLandMark';
+import ShowDirection from './ShowDirection';
 
 export {
   Home,
@@ -16,4 +17,5 @@ export {
   Directions,
   AddDirection,
   AddLandMark,
+  ShowDirection,
 };

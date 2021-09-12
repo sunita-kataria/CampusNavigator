@@ -41,7 +41,9 @@ export default function Directions({navigation}) {
     apicall();
   }, []);
 
-  const renderItem = ({item}) => <Direction data={item} key={item.id} />;
+  const renderItem = ({item}) => (
+    <Direction data={item} key={item.id} navigation={navigation} />
+  );
 
   const onRefresh = () => {
     apicall();
