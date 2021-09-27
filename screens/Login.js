@@ -13,8 +13,8 @@ import localhost from '../ip';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = ({navigation}) => {
-  const [userName, onChangeUserName] = React.useState('');
-  const [password, onChangePassword] = React.useState('');
+  const [userName, onChangeUserName] = React.useState('abc@gmail.com');
+  const [password, onChangePassword] = React.useState('123456');
 
   const checkCredentials = async () => {
     try {

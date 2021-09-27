@@ -44,8 +44,8 @@ export default function Home({navigation}) {
     'Wednesday',
     'Thursday',
     'Friday',
-    // 'Saturday',
-    // 'Sunday',
+    'Saturday',
+    'Sunday',
   ];
   useEffect(() => {
     apicall();
@@ -73,16 +73,15 @@ export default function Home({navigation}) {
     for (var i = 1; i <= 7; i++) {
       const smallbox = [];
       for (var j = 0; j < obj[i].length; j++) {
-        smallbox.push(obj[i][j]['courseName'] + '   ');
+        smallbox.push(obj[i][j]);
       }
       box.push(smallbox);
     }
     // console.log(box);
-
+    // console.log(box);
     return (
       <View>
-        <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
-          {/* <TableWrapper> */}
+        {/* <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
           <TableWrapper style={{flexDirection: 'row'}}>
             <Col
               data={days}
@@ -98,8 +97,51 @@ export default function Home({navigation}) {
               heightArr={[30, 30, 30, 30, 30]}
               textStyle={styles.titleText}></Col>
           </TableWrapper>
-          {/* </TableWrapper> */}
-        </Table>
+        </Table> */}
+        {[0, 1, 2, 3, 4, 5, 6].map(item => {
+          for (var i = box[item].length; i < 6; i++) box[item].push('NA');
+          console.log(days[item]);
+          return (
+            <View>
+              <Text style={{fontWeight: 'bold', fontSize: 20}}>
+                {days[item]} :{' '}
+              </Text>
+              <FlatList
+                data={box[item]}
+                horizontal={true}
+                renderItem={str => {
+                  if (str.item === 'NA') {
+                    return (
+                      <View
+                        style={{
+                          backgroundColor: 'red',
+                          margin: 10,
+                          width: 40,
+                        }}>
+                        <Text>{str.item}</Text>
+                      </View>
+                    );
+                  } else {
+                    return (
+                      <View
+                        style={{
+                          backgroundColor: 'green',
+                          margin: 10,
+                          // width: 40,
+                        }}>
+                        <Text>{str.item['courseName']}</Text>
+                        <Text>
+                          [{str.item.startTime} , {str.item.endTime}]
+                        </Text>
+                      </View>
+                    );
+                  }
+                }}
+                // keyExtractor={item => item}
+              />
+            </View>
+          );
+        })}
       </View>
     );
   }
