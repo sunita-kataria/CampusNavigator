@@ -129,9 +129,10 @@ export default function Home({navigation}) {
                           margin: 10,
                           // width: 40,
                         }}>
-                        <Text>{str.item['courseName']}</Text>
+                        <Text>{str.item['subject']}</Text>
+                        <Text>{item==1?'research methods':'education and social justice'}</Text>
                         <Text>
-                          [{str.item.startTime} , {str.item.endTime}]
+                          [{str.item.endTime}-{str.item.startTime}]
                         </Text>
                       </View>
                     );

@@ -55,10 +55,10 @@ export default function ShowDirection({route, navigation}) {
         Liked By : {datafetched?.likes}
       </Text>
       <Text style={{fontWeight: 'italic', fontSize: 15}}>
-        Added By : {datafetched?.student.name}
+        Added By : {datafetched?.student?.name}
       </Text>
       <Text style={{fontWeight: 'Bold', fontSize: 25}}>Steps</Text>
-      {datafetched?.steps.map(renderStep)}
+      {datafetched?.steps?.map(renderStep)}
       <Text style={{fontWeight: 'Bold', fontSize: 20}}>Your Destination</Text>
     </View>
   );
