@@ -110,7 +110,7 @@ export default function AddDirection({navigation}) {
           {Classroom.map(renderClassroom)}
         </Picker>
       ) : null}
-      <Button title="FinalSubmit" onPress={finalSubmit} />
+      
 
       <TextInput
         onChangeText={setInstructions}
@@ -131,6 +131,9 @@ export default function AddDirection({navigation}) {
       <Button title="add" onPress={addElemetInStep} />
 
       {allSteps.map(renderAllStep)}
+      <View style={{height:10}}>
+      </View>
+      <Button title="FinalSubmit" onPress={finalSubmit} />
     </View>
   );
 }

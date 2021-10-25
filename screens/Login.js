@@ -40,7 +40,7 @@ const Login = ({navigation}) => {
     } catch (err) {
       console.error(err);
     }
-    // let apiCall = true;
+    // let apiCall = true false;
     // if (apiCall) {
     // }
   };
