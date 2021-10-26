@@ -9,8 +9,8 @@ export default function AddDirection({navigation}) {
   const [instructions, setInstructions] = useState('');
   const [isLandmark, setIsLandmark] = useState(false);
 
-  const [selectedLandmark, setSelectedLandmark] = useState('');
-  const [selectedClassroom, setSelectedClassroom] = useState('');
+  const [selectedLandmark, setSelectedLandmark] = useState('NA');
+  const [selectedClassroom, setSelectedClassroom] = useState(1);
   const [allSteps, setallSteps] = useState([]);
   const [Landmark, setLandmark] = useState([]);
   const [Classroom, setClassroom] = useState([]);
@@ -34,8 +34,9 @@ export default function AddDirection({navigation}) {
     let temp = [...allSteps];
     const xyzzz = {};
     xyzzz['instructions'] = instructions;
-    if (selectedLandmark === 'NA') xyzzz['isLandmark'] = false;
-    else {
+    if (selectedLandmark == 'NA') {
+      xyzzz['isLandmark'] = false;
+    } else {
       xyzzz['isLandmark'] = true;
       xyzzz['landmark'] = {
         id: selectedLandmark,
