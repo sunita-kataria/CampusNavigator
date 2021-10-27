@@ -52,9 +52,6 @@ export default function ShowDirection({route, navigation}) {
         {datafetched?.name}
       </Text>
       <Text style={{fontWeight: 'italic', fontSize: 15}}>
-        Liked By : {datafetched?.likes}
-      </Text>
-      <Text style={{fontWeight: 'italic', fontSize: 15}}>
         Added By : {datafetched?.student?.name}
       </Text>
       <Text style={{fontWeight: 'Bold', fontSize: 25}}>Steps</Text>
